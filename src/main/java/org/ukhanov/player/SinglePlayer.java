@@ -2,12 +2,14 @@ package org.ukhanov.player;
 
 import org.ukhanov.field.Field;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import static org.ukhanov.field.Field.FIELD_BORDER;
+
 public class SinglePlayer extends AbstractPlayer implements Player {
     private final Scanner scanner = new Scanner(System.in);
+
     public SinglePlayer(Field myField, String name) {
         super(myField, name);
     }
@@ -31,10 +33,18 @@ public class SinglePlayer extends AbstractPlayer implements Player {
 
     @Override
     public String toString() {
-        return "Ваше поле\n" +
-                myField.toString() +
-                "\n" +
-                "Поле Врага\n" +
-                enemyField;
+        StringBuilder toString = new StringBuilder();
+        String[] myFieldAsString = myField.toString().split("\n");
+        String[] enemyFieldAsString = enemyField.toString().split("\n");
+        toString.append("Ваше поле")
+                .append(" ".repeat(FIELD_BORDER))
+                .append("Поле противника\n");
+        for (int i = 0; i < myFieldAsString.length; i++) {
+            toString.append(myFieldAsString[i])
+                    .append("   ")
+                    .append(enemyFieldAsString[i])
+                    .append("\n");
+        }
+        return toString.toString();
     }
 }
